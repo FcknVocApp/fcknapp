@@ -160,4 +160,4 @@ async def get_mywords(request: Request):
     return templates.TemplateResponse("mywords.html", {
         "request": request,
         "words": user_words
-    }) Поверяй init в app и back-end.
+    })
