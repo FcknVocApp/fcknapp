@@ -11,12 +11,26 @@ from datetime import datetime
 # 🔧 Базовая настройка
 app = FastAPI()
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-STATIC_DIR = os.path.join(BASE_DIR, "frontend", "public")
-app.mount("/public", StaticFiles(directory=STATIC_DIR), name="public")
+# 📀 Шаблоны Jinja2
+from fastapi.templating import Jinja2Templates
 
-templates = Jinja2Templates(directory="app/templates")
-print("Статика из папки:", STATIC_DIR)
+# 📂 Шаблоны (лежит в backend/app/templates)
+TEMPLATES_DIR = os.path.abspath(os.path.join(
+    os.path.dirname(__file__),
+    'templates'
+))
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
+
+# 📁 Статика (лежит в frontend/public)
+STATIC_DIR = os.path.abspath(os.path.join(
+    os.path.dirname(__file__),
+    '..', '..', 'frontend', 'public'
+))
+
+if os.path.exists(STATIC_DIR):
+    app.mount("/public", StaticFiles(directory=STATIC_DIR), name="public")
+else:
+    print(f"⚠️ Статика не найдена по пути: {STATIC_DIR}")
 
 # 📂 CSV с фразовыми глаголами
 CSV_PATH = os.path.join(os.path.dirname(__file__), "phrasal_verbs.csv")
@@ -32,7 +46,7 @@ with open(CSV_PATH, encoding="utf-8") as f:
             "example_ru": row["example_ru"].strip(),
         }
 
-# 🧠 Временное хранилище
+# 🧐 Временное хранилище
 user_words = []
 wrong_words = []
 
@@ -41,13 +55,12 @@ wrong_words = []
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-# 🔥 Открытие страницы Quiz Now
+# 🔥 Quiz Now
 @app.get("/quiznow", response_class=HTMLResponse)
 async def quiz_now(request: Request):
     return templates.TemplateResponse("quiznow.html", {"request": request})
 
-
-# ➡️ Подгрузка одного вопроса
+# ➞ Следующий вопрос
 @app.get("/quiznow/next", response_class=HTMLResponse)
 async def quiznow_next(request: Request):
     if not user_words:
@@ -68,8 +81,7 @@ async def quiznow_next(request: Request):
         "options": options
     })
 
-
-# ✅ Обработка ответа
+# ✅ Ответ на вопрос
 @app.post("/quiznow/answer", response_class=HTMLResponse)
 async def quiznow_answer(
     request: Request,
