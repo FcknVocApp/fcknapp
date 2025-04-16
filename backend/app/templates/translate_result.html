@@ -1,36 +1,27 @@
-<div id="result">
-    <h1 class="text-2xl font-bold mb-4">🔍 Переводчик</h1>
+<div class="translation-box">
+  <h3>Перевод:</h3>
+  <p><strong>{{ result.translation }}</strong></p>
 
-    <form method="post" hx-post="/translate" hx-target="#result" hx-swap="outerHTML" class="mb-4">
-        <input name="word" type="text" placeholder="Введите слово или фразовый глагол"
-               class="border p-2 w-full rounded mb-2">
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
-            Перевести
-        </button>
-    </form>
+  {% if result.example_en %}
+    <h3>Пример:</h3>
+    <p>{{ result.example_en }}</p>
+    <p><em>{{ result.example_ru }}</em></p>
+  {% endif %}
 
-    {% if result %}
-        <div class="border p-4 rounded shadow bg-white">
-            <h2 class="text-xl font-bold mb-3">🔍 Перевод</h2>
-            <p><strong>Слово:</strong> {{ result.word if result.word else '' }}</p>
-            <p><strong>Перевод:</strong> {{ result.translation }}</p>
-            <p><strong>💬 Пример (EN):</strong> {{ result.example_en }}</p>
-            <p><strong>🗯 Перевод (RU):</strong> {{ result.example_ru }}</p>
+  <!-- ✅ Кнопка добавить в словарь -->
+  <form method="post" hx-post="/add_word" hx-target="#add-button-container" hx-swap="outerHTML">
+    <input type="hidden" name="word" value="{{ result.word }}">
+    <input type="hidden" name="translation" value="{{ result.translation }}">
+    <input type="hidden" name="example_en" value="{{ result.example_en }}">
+    <input type="hidden" name="example_ru" value="{{ result.example_ru }}">
+    <div id="add-button-container">
+      <button type="submit" class="btn-soft">📌 Добавить в словарь</button>
+    </div>
+  </form>
 
-            {% if result.translation != "перевод не найден — может, ты выдумываешь?" %}
-            <form hx-post="/add_word" hx-target="#add-feedback" class="mt-4">
-                <input type="hidden" name="word" value="{{ result.word }}">
-                <input type="hidden" name="translation" value="{{ result.translation }}">
-                <input type="hidden" name="example_en" value="{{ result.example_en }}">
-                <input type="hidden" name="example_ru" value="{{ result.example_ru }}">
-                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors">
-                    Добавить в словарь
-                </button>
-            </form>
-            <div id="add-feedback" class="mt-2 text-sm text-green-600"></div>
-            {% endif %}
-        </div>
-    {% else %}
-        <p class="text-gray-600 mt-4">🕓 Я жду, пока ты введёшь фразовый глагол 💬</p>
-    {% endif %}
+  <!-- ✅ Словарь позорника -->
+  <a href="/mywords" class="btn-soft" style="margin-top: 1.5rem;">📚 Словарь позорника</a>
+
+  <!-- ✅ Вернуться на главную -->
+  <a href="/" class="btn-soft" style="margin-top: 1.5rem;">⬅️ Вернуться на главную</a>
 </div>

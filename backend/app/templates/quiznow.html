@@ -1,1 +1,91 @@
-<h1 class="text-center text-2xl mt-20">🔥 Тут скоро будет боль за день</h1>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Now</title>
+
+  <!-- Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="/public/output_minimalist.css" rel="stylesheet">
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-box {
+      margin-top: 1.5rem;
+    }
+
+    .btn-soft {
+      background: white;
+      color: black;
+      border: 2px solid black;
+      padding: 0.75rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      text-align: center;
+      margin-top: 1.5rem;
+      cursor: pointer;
+    }
+
+    .answer-button {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 2px solid black;
+      border-radius: 0.5rem;
+      background: white;
+      cursor: pointer;
+    }
+
+    .feedback {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔥 Проверка на позор</h1>
+
+    <div id="quiz-content" hx-get="/quiznow/next" hx-trigger="load" hx-swap="innerHTML">
+      <!-- сюда подгружается вопрос с сервера -->
+    </div>
+
+    <a href="/" class="btn-soft back-button">⬅️ Вернуться на главную</a>
+  </div>
+</body>
+</html>

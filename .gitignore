@@ -1,4 +1,9 @@
-# 📦 Системное
+__pycache__/
+*.pyc
+.env
+*.sqlite3
+.vscode/
+.idea/# 📦 Системное
 .DS_Store
 __pycache__/
 *.pyc
