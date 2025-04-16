@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Перевод</title>
+
+  <!-- Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Минималистичный CSS -->
+  <link href="/public/output_minimalist.css" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f4f4f4;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid black;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .btn-soft {
+      background: white;
+      color: black;
+      border: 2px solid black;
+      padding: 0.75rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s ease-in-out;
+      display: inline-block;
+      white-space: normal;
+      word-break: break-word;
+      text-wrap: balance;
+      cursor: pointer;
+    }
+
+    .main-text {
+      display: block;
+      font-weight: 600;
+    }
+
+    .hover-text {
+      display: none;
+      font-weight: 300;
+    }
+
+    .hover-reveal:hover .hover-text {
+      display: block;
+      margin-top: 0.25rem;
+    }
+
+    .hover-reveal:hover .main-text {
+      display: none;
+    }
+
+    .translation-box {
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    .translation-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .translation-box p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    #add-button-container {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ПЕРЕВОД</h1>
+
+    <form method="post" hx-post="/translate" hx-target="#result" hx-swap="outerHTML">
+      <input type="text" name="word" placeholder="ну че там тебе перевести?" required>
+      <button type="submit" class="btn-soft hover-reveal">
+        <span class="main-text">получить перевод</span>
+        <span class="hover-text">хотя ты заслуживаешь только пропиздонов</span>
+      </button>
+    </form>
+
+    <div id="result">
+      {% if result %}
+        <div class="translation-box">
+          <h3>Перевод:</h3>
+          <p><strong>{{ result.translation }}</strong></p>
+
+          {% if result.example_en %}
+            <h3>Пример:</h3>
+            <p>{{ result.example_en }}</p>
+            <p><em>{{ result.example_ru }}</em></p>
+          {% endif %}
+
+          <form method="post" action="/add_word" hx-post="/add_word" hx-target="#add-button-container" hx-swap="outerHTML">
+            <input type="hidden" name="word" value="{{ result.word }}">
+            <input type="hidden" name="translation" value="{{ result.translation }}">
+            <input type="hidden" name="example_en" value="{{ result.example_en }}">
+            <input type="hidden" name="example_ru" value="{{ result.example_ru }}">
+            <div id="add-button-container">
+              <button type="submit" class="btn-soft"> Добавить в словарь</button>
+            </div>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

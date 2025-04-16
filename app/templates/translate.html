@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Переводчик</title>
+    <script src="/static/htmx.min.js"></script>
+    <link href="/static/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gray-50 text-lg font-sans flex items-center justify-center">
+<div class="w-full max-w-xl p-6 bg-white shadow rounded">
+    <h1 class="text-3xl font-bold mb-6 text-center">🔍 Переводчик</h1>
+    
+    <form method="post" 
+          hx-post="/translate" 
+          hx-target="#result-container" 
+          hx-swap="innerHTML" 
+          class="mb-6">
+        <input name="word" type="text" placeholder="Введите слово или фразовый глагол"
+               class="border p-3 w-full rounded mb-4 text-xl">
+        <button type="submit" 
+                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded w-full text-xl transition">
+            {% if result %}🔄 Перевести другое слово{% else %}🔍 Перевести слово{% endif %}
+        </button>
+    </form>
+
+    <div id="result-container">
+        {% if result %}
+            <div class="border p-4 rounded shadow bg-white mb-6">
+                <h2 class="text-2xl font-bold mb-4">🔍 Перевод</h2>
+                <p><strong>Слово:</strong> {{ result.word }}</p>
+                <p><strong>Перевод:</strong> {{ result.translation }}</p>
+                <div class="flex flex-col md:flex-row md:gap-4">
+                    <p>💬 <strong>EN:</strong> {{ result.example_en }}</p>
+                    <p>🗯 <strong>RU:</strong> {{ result.example_ru }}</p>
+                </div>
+            </div>
+
+            {% if not added %}
+                <div id="add-button-container">
+                    <form hx-post="/add_word" hx-target="#add-button-container" hx-swap="outerHTML">
+                        <input type="hidden" name="word" value="{{ result.word }}">
+                        <input type="hidden" name="translation" value="{{ result.translation }}">
+                        <input type="hidden" name="example_en" value="{{ result.example_en }}">
+                        <input type="hidden" name="example_ru" value="{{ result.example_ru }}">
+                        <button type="submit"
+                                class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded w-full text-xl transition">
+                            📘 Добавить в словарь
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div id="add-button-container">
+                    <button disabled class='bg-green-500 text-white font-semibold px-6 py-3 rounded w-full text-xl transition'>
+                        ✅ Добавлено в словарь
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

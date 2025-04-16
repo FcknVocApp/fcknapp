@@ -1,0 +1,1 @@
+from app.database import get_db  # Импорт get_db из файла database.pypython3 run.py

@@ -1,0 +1,26 @@
+# 📦 Системное
+.DS_Store
+__pycache__/
+*.pyc
+
+# ⚙️ Python/Базы
+*.env
+*.db
+*.sqlite3
+
+# 💣 Node / Expo / лишнее
+node_modules/
+package-lock.json
+.expo/
+babel.config.js
+
+# 🧹 Локальные штуки
+navigation/
+Baza/
+test/
+*.log
+*.zip
+
+# 🙅‍♀️ Отдельные приватные env'ки
+backend/.env
+backend/Baza/Translations/.env

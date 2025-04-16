@@ -1,0 +1,39 @@
+
+/* ===== Шрифты ===== */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Space+Mono&display=swap');
+
+.font-ibm {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.font-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+/* ===== Цвета ===== */
+.bg-black {
+  background-color: #000;
+}
+.text-white {
+  color: #fff;
+}
+.text-gray {
+  color: #7c7c7c;
+}
+
+/* ===== Кнопка боли ===== */
+.btn-brutal {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-brutal:hover {
+  background-color: #000;
+  color: #fff;
+}
