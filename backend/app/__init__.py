@@ -1,3 +1,6 @@
+import sys
+print("🧪 Python version on Render:", sys.version)
+
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -12,19 +15,14 @@ from datetime import datetime
 app = FastAPI()
 
 # 📀 Шаблоны Jinja2
-from fastapi.templating import Jinja2Templates
-
-# 📂 Шаблоны (лежит в backend/app/templates)
 TEMPLATES_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(__file__),
-    'templates'
+    os.path.dirname(__file__), 'templates'
 ))
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # 📁 Статика (лежит в frontend/public)
 STATIC_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(__file__),
-    '..', '..', 'frontend', 'public'
+    os.path.dirname(__file__), '..', '..', 'frontend', 'public'
 ))
 
 if os.path.exists(STATIC_DIR):
@@ -149,8 +147,8 @@ async def add_word(
     })
 
     return """
-    <div id="add-button-container">
-      <button disabled style="background-color: #22c55e; color: white; border: none; padding: 0.75rem 1.75rem; font-size: 1rem; font-weight: 600; border-radius: 0.5rem; text-align: center; cursor: default;">
+    <div id=\"add-button-container\">
+      <button disabled style=\"background-color: #22c55e; color: white; border: none; padding: 0.75rem 1.75rem; font-size: 1rem; font-weight: 600; border-radius: 0.5rem; text-align: center; cursor: default;\">
         ✅ Добавлено в словарь
       </button>
     </div>
