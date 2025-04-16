@@ -1,17 +1,10 @@
 services:
   - type: web
-    name: fcknvoc-backend
+    name: fcknvocapp
     env: python
     rootDir: backend
-    startCommand: uvicorn app.__init__:app --host 0.0.0.0 --port 10000
     buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
     envVars:
       - key: PYTHON_VERSION
         value: 3.11
-
-  - type: web
-    name: fcknvoc-frontend
-    env: static
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist  # или build — зависит от того, React у тебя или Vite
