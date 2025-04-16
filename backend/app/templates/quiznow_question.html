@@ -1,14 +1,18 @@
 <div class="quiz-box">
-    <h2>{{ word.word }}</h2> <!-- английское слово -->
-  
-    <form hx-post="/quiznow/answer" hx-target="#quiz-content" hx-swap="innerHTML">
-      {% for option in options %}
-        <button type="submit" name="answer" value="{{ option }}" class="answer-button">
-          {{ option }}
-        </button>
-      {% endfor %}
-  
-      <input type="hidden" name="correct" value="{{ word.translation }}">
-      <input type="hidden" name="word" value="{{ word.word }}">
-    </form>
-  </div>
+  <h2>{{ word.word }}</h2> <!-- английское слово -->
+
+  <form hx-post="/quiznow/answer" hx-target="#quiz-content" hx-swap="innerHTML">
+    
+    <!-- Сначала скрытые значения -->
+    <input type="hidden" name="correct" value="{{ word.translation }}">
+    <input type="hidden" name="word" value="{{ word.word }}">
+
+    <!-- Затем кнопки -->
+    {% for option in options %}
+      <button type="submit" name="answer" value="{{ option }}" class="answer-button">
+        {{ option }}
+      </button>
+    {% endfor %}
+
+  </form>
+</div>
